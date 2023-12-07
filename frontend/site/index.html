@@ -1,0 +1,124 @@
+<script type="text/javascript" language="javascript">
+    
+    var last_phrase = ''
+    var got_image_link = false
+
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log ('Запрос к API getschemas')
+        var URL = "https://web.thinksnow.online/api/getschemas/";
+        var xmlhttp = new XMLHttpRequest();
+        // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+        xmlhttp.open("GET", URL, false);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+        xmlhttp.send();
+        console.log ('Результат: ' + xmlhttp.status);
+        schemas = JSON.parse(xmlhttp.response);
+        
+        schema_selection = document.getElementById("schema_selection");
+        for (const schema in schemas) {
+            console.log(`${schema}: ${schemas[schema]}`);
+            var el = document.createElement("option");
+            el.textContent = schemas[schema];
+            el.value = schema;
+            schema_selection.appendChild(el);
+        }
+        history();
+        
+    }, false);
+    
+    function send()
+    {
+        var request = {};
+        var input_phrase = document.getElementById("input_phrase").value;
+        var id = document.getElementById("schema_selection").value;
+        var URL = "https://web.thinksnow.online/api/figalize/";
+        
+        request = {
+            schema_id: id,
+            phrase: input_phrase
+        }
+        request_json = JSON.stringify(request)
+
+        var xmlhttp = new XMLHttpRequest();
+        // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+        xmlhttp.open("POST", URL, false);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+        xmlhttp.send(request_json);
+        
+        if (xmlhttp.status == 200) {
+            result = JSON.parse(xmlhttp.response);
+            document.getElementById("result").textContent = result.data;
+            // got_image_link = false;
+            last_phrase = result.data;
+            // document.getElementById("image_link").innerHTML += '<a href=""></a>';
+            // image_link();
+        }
+
+    }
+ 
+    function history()
+    {
+        var URL = "https://web.thinksnow.online/api/gethistory/";
+
+        var xmlhttp = new XMLHttpRequest();
+        // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+        xmlhttp.open("GET", URL, false);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
+        xmlhttp.send();
+        console.log(xmlhttp.response);
+        result = JSON.parse(xmlhttp.response);
+        console.log(result[0][0]);
+        document.getElementById("history").textContent = 'Например, ' + result[0][1] + ' → ' + result[0][2];
+        document.getElementById("statistics").textContent = 'Нами отфигачили что-то уже ' + result[0][0] + ' раз!';
+        setTimeout(history, 1000);
+    }
+    
+    // function callbackFunction(xmlhttp) 
+    // {
+    //     alert(xmlhttp.responseXML);
+    // }
+    
+</script>
+
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <!-- <meta name="viewport" content="width=device-width"> -->
+        <title>Фигачечная</title>
+        <link href='https://fonts.googleapis.com/css?family=Lobster|Raleway' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Old%20Standard%20TT' rel='stylesheet' type='text/css'>
+        <link href="fonts.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <body id='bod'>
+        <div class="allButFooter">
+            <div class="header-vertical">
+                <h1>Фигачечная</h1>
+                <h2>Бесплатный сервис по офигачиванию слов</h2>
+                <!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> -->
+                <!-- <div class="vertical-center">
+
+                </div> -->
+            </div>
+            <div class="vertical-center">
+                <input type="text" id="input_phrase" maxlength="256" name="input_phrase"> </input> <button style="font-family: 'Old Standard TT', sans-serif; font-size: 14px" type="submit" onclick="javascript:send()">Офигачить!</button><br>
+                <p id="history" style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 16px; margin: -10; text-shadow: 3px 3px 5px black;">Например, ...</p><br><br>
+                <select name="schema_selection" id="schema_selection" style="font-family: 'Old Standard TT', sans-serif; font-size: 14px; margin: -10;"></select><br><br>
+                <p style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 16px; text-shadow: 3px 3px 5px black; margin: -5;">Схема</p><br><br>
+                <p  id="result" style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 80px; margin: -10; text-shadow: 3px 3px 5px black;">...</p>
+                <!-- <a id = "image_link" style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 20px; text-shadow: 3px 3px 5px black;" href=""> </a> -->
+
+            </div>
+            <!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> -->
+
+        </div>
+        <footer>
+            <h3 id="statistics">Нами уже офигачено ... слов!</h3>
+            <a style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 20px; text-shadow: 3px 3px 5px black;" href="https://gitlab.thinksnow.online/th1nksnow/figa-fixing">gitlab-repo</a>
+        </footer>
+    </body>
+
+</html>
