@@ -63,7 +63,7 @@ services:
         condition: service_started
 
   frontend:
-    build: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:latest
+    image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:latest
     expose:
       - '80'
     configs:
