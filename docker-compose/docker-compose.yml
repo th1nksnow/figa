@@ -13,6 +13,8 @@ services:
       POSTGRES_PASSWORD: 123456Qq
     networks:
       figachechnaya:
+    volumes:
+      - /srv/postgresql/db:/var/lib/postgresql/data
 
   history:
     build: ../microservices/history/
@@ -61,7 +63,7 @@ services:
         condition: service_started
 
   frontend:
-    build: ../frontend/
+    build: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:latest
     expose:
       - '80'
     configs:

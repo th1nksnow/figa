@@ -1,8 +1,8 @@
 ## Архитектура
                       
-                 https://figachechnaya.ru              
+                 https://web.thinksnow.ru              
                             │                       
-                            │SSL                  
+                            │                  
                             │                         
                     ┌───────▼───────┐                 
                     │ INGRESS NGINX │                 
@@ -18,8 +18,8 @@
            │                                  │             
            │                                  │           
     ┌──────▼────────┐                ┌────────▼─────┐  
-    │    HISTORY    │  POST history  │   FIGALIZE   │  
-    │  microservice │◄───────────────┤ microservice │ 
+    │ HISTORY, PULL │  POST history  │   FIGALIZE   │  
+    │ microservices │◄───────────────┤ microservice │ 
     └──────┬────────┘                └──────────────┘ 
            │                              
            │                         
