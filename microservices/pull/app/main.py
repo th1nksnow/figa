@@ -5,11 +5,6 @@ from pydantic import BaseModel
 import psycopg
 import os
 import time
-# from starlette_exporter import PrometheusMiddleware, handle_metrics
-
-# import uvicorn
-
-# api_port = os.environ['HISTORY_API_PORT']
 
 regexp_pattern = "[а-яА-Яеё,. ]+"
 

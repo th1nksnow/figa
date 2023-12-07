@@ -1,4 +1,3 @@
-# import grequests
 import re
 import json
 from fastapi import FastAPI, Response, status
@@ -9,7 +8,6 @@ import random
 import asyncio
 from requests_futures.sessions import FuturesSession
 from fastapi_profiler.profiler_middleware import PyInstrumentProfilerMiddleware
-# from aiokafka import AIOKafkaProducer
 import uvicorn
 
 system_is_ready = False

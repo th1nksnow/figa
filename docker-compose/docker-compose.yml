@@ -85,7 +85,7 @@ services:
     networks:
       figachechnaya:
         aliases:
-          - "web.thinksnow.online"
+          - "web.thinksnow.ru"
     restart: always
     depends_on:
       - frontend

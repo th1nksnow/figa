@@ -5,7 +5,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         console.log ('Запрос к API getschemas')
-        var URL = "https://web.thinksnow.online/api/getschemas/";
+        var URL = "https://web.thinksnow.ru/api/getschemas/";
         var xmlhttp = new XMLHttpRequest();
         // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
         xmlhttp.open("GET", URL, false);
@@ -32,7 +32,7 @@
         var request = {};
         var input_phrase = document.getElementById("input_phrase").value;
         var id = document.getElementById("schema_selection").value;
-        var URL = "https://web.thinksnow.online/api/figalize/";
+        var URL = "https://web.thinksnow.ru/api/figalize/";
         
         request = {
             schema_id: id,
@@ -60,7 +60,7 @@
  
     function history()
     {
-        var URL = "https://web.thinksnow.online/api/gethistory/";
+        var URL = "https://web.thinksnow.ru/api/gethistory/";
 
         var xmlhttp = new XMLHttpRequest();
         // xmlhttp.onreadystatechange = callbackFunction(xmlhttp);
@@ -117,7 +117,7 @@
         </div>
         <footer>
             <h3 id="statistics">Нами уже офигачено ... слов!</h3>
-            <a style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 20px; text-shadow: 3px 3px 5px black;" href="https://gitlab.thinksnow.online/th1nksnow/figa-fixing">gitlab-repo</a>
+            <a style="color: white; font-family: 'Old Standard TT', sans-serif; font-size: 20px; text-shadow: 3px 3px 5px black;" href="https://gitlab.thinksnow.ru/th1nksnow/figalizer">gitlab-repo</a>
         </footer>
     </body>
 
