@@ -1,0 +1,35 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  namespace: default
+  labels:
+    app: front
+
+spec:
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      # imagePullSecrets: 
+      # - name: registry-secret
+      containers:
+        - name: frontend
+          image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:latest
+          ports:
+            - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nginx/conf.d/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: front
+
+...

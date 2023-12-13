@@ -1,0 +1,25 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment-v1
+  labels:
+    app: my-k8s-deploy
+
+spec:
+  selector:
+    matchLabels:
+      project: v1
+  template:
+    metadata:
+      labels:
+        project: v1
+    spec:
+      containers:
+        - name: php-container
+          image: th1nksnow/k8sphp:latest
+          ports:
+            - containerPort: 80
+
+...
