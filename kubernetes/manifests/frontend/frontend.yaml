@@ -17,11 +17,11 @@ spec:
       labels:
         app: front
     spec:
-      # imagePullSecrets: 
-      # - name: regcred
+      imagePullSecrets: 
+      - name: regcred
       containers:
         - name: frontend
-          image: nginx:latest
+          image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/nginx:latest
           ports:
             - containerPort: 80
       #     volumeMounts:
