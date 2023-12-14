@@ -3,19 +3,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front
+  name: frontend
   namespace: default
   labels:
-    app: front
+    app: frontend
 
 spec:
   selector:
     matchLabels:
-      app: front
+      app: frontend
   template:
     metadata:
       labels:
-        app: front
+        app: frontend
     spec:
       imagePullSecrets: 
       - name: regcred

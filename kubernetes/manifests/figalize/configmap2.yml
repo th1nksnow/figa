@@ -1,0 +1,13 @@
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: figalize-env
+  namespace: default
+
+data:
+  HISTORY_APPEND_URL: http://history/api/append/
+  FIGALIZE_API_PORT: '80'
+
+...

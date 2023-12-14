@@ -14,5 +14,25 @@ spec:
       services:
         - name: front
           port: 80
+    - conditions:
+      - prefix: /api/figalize
+      services:
+        - name: figalize
+          port: 80
+    - conditions:
+      - prefix: /api/getschemas
+      services:
+        - name: figalize
+          port: 80
+    - conditions:
+      - prefix: /api/append
+      services:
+        - name: history
+          port: 80
+    - conditions:
+      - prefix: /api/gethistory
+      services:
+        - name: pull
+          port: 80
 
 ...

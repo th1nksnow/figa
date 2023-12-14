@@ -3,22 +3,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-deployment-v1
+  name: history
+  namespace: default
   labels:
-    app: my-k8s-deploy
+    app: history
 
 spec:
   selector:
     matchLabels:
-      project: v1
+      app: history
   template:
     metadata:
       labels:
-        project: v1
+        app: history
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
-        - name: php-container
-          image: th1nksnow/k8sphp:latest
+        - name: history
+          image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/history:latest
+          env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: history-env
+                key: DB_HOST
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: history-env
+                key: DB_PORT
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: history-env
+                key: DB_NAME
+          - name: DB_LOGIN
+            valueFrom:
+              secretKeyRef:
+                name: db-user
+                key: db-username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: db-pass
+                key: db-password
           ports:
             - containerPort: 80
 

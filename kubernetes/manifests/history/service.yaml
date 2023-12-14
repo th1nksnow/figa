@@ -3,12 +3,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: history
   namespace: default
 
 spec:
   selector:
-    app: frontend
+    app: history
   type: ClusterIP
   sessionAffinity: None
   ports:
