@@ -12,7 +12,7 @@ spec:
     - conditions:
       - prefix: /
       services:
-        - name: main
+        - name: front
           port: 80
          
 ...

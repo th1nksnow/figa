@@ -17,16 +17,16 @@ spec:
       labels:
         app: front
     spec:
-      # imagePullSecrets: 
-      # - name: registry-secret
+      imagePullSecrets: 
+      - name: regcred
       containers:
         - name: frontend
           image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:latest
           ports:
             - containerPort: 80
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/nginx/conf.d/
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/nginx/conf.d/
       volumes:
         - name: config-volume
           configMap:
