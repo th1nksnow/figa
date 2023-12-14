@@ -12,7 +12,7 @@ spec:
     - conditions:
       - prefix: /
       services:
-        - name: front
+        - name: frontend
           port: 80
     - conditions:
       - prefix: /api/figalize
