@@ -22,17 +22,17 @@ spec:
           ports:
             - containerPort: 5432
           env:
-          - name: DB_LOGIN
+          - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
                 name: db-user
                 key: db-username
-          - name: DB_PASS
+          - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: db-pass
                 key: db-password
-          - name: DB_NAME
+          - name: POSTGRES_DB
             valueFrom:
               configMapKeyRef:
                 name: history-env

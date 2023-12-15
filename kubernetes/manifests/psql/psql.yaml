@@ -1,0 +1,71 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: postgres-db-lb
+
+spec:
+    selector:
+        app: postgresql-db
+    type: LoadBalancer
+    ports:
+    - port: 5432
+    targetPort: 5432
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: postgresql-db
+
+spec:
+    serviceName: postgresql-db-service
+    selector:
+        matchLabels:
+            app: postgresql-db
+    replicas: 2
+    template:
+        metadata:
+            labels:
+                app: postgresql-db
+        spec:
+            containers:
+              - name: postgresql-db
+            image: postgres:13.13
+            imagePullPolicy: IfNotPresent
+            ports:
+              - containerPort: 5432
+            volumeMounts:
+              - name: postgresql-db-disk
+                mountPath: /data
+            env:
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: db-user
+                    key: db-username
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: db-pass
+                    key: db-password
+              - name: POSTGRES_DB
+                valueFrom:
+                  configMapKeyRef:
+                    name: history-env
+                    key: DB_NAME
+
+---
+
+volumeClaimTemplates:
+    - metadata:
+        name: postgresql-db-disk
+      spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+              requests:
+                  storage: 5Gi
+
+...
