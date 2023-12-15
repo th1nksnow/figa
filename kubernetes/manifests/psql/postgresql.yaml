@@ -37,13 +37,13 @@ spec:
               configMapKeyRef:
                 name: history-env
                 key: DB_NAME
-      #     volumeMounts:
-      #       - mountPath: /var/lib/postgresql/data
-      #         name: postgredb
-      # volumes:
-      #   - name: postgredb
-      #     persistentVolumeClaim:
-      #       claimName: postgres-pv-claim
+          # volumeMounts:
+          #   - mountPath: /var/lib/postgresql/data
+          #     name: postgredb
+#       volumes:
+#         - name: postgredb
+#           persistentVolumeClaim:
+#             claimName: postgres-pv-claim
 
 # ---
 
@@ -56,7 +56,6 @@ spec:
 #         app: postgres
    
 #     spec:
-#       storageClassName: manual
 #       capacity:
 #         storage: 5Gi
 #       accessModes:
@@ -74,7 +73,6 @@ spec:
 #         app: postgres
 
 #     spec:
-#       storageClassName: manual
 #       accessModes:
 #         - ReadWriteMany
 #       resources:
