@@ -6,6 +6,7 @@ metadata:
   name: basic
 
 spec:
+  replicas: 2
   virtualhost:
     fqdn: kube.thinksnow.ru
   routes:
