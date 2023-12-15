@@ -37,13 +37,13 @@ spec:
               configMapKeyRef:
                 name: history-env
                 key: DB_NAME
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgredb
-      volumes:
-        - name: postgredb
-          persistentVolumeClaim:
-            claimName: postgres-pv-claim
+      #     volumeMounts:
+      #       - mountPath: /var/lib/postgresql/data
+      #         name: postgredb
+      # volumes:
+      #   - name: postgredb
+      #     persistentVolumeClaim:
+      #       claimName: postgres-pv-claim
 
 # ---
 
@@ -64,22 +64,22 @@ spec:
 #       hostPath:
 #         path: "/mnt/data"
 
----
+# ---
 
-    kind: PersistentVolumeClaim
-    apiVersion: v1
-    metadata:
-      name: postgres-pv-claim
-      labels:
-        app: postgres
-   
-    spec:
-      storageClassName: manual
-      accessModes:
-        - ReadWriteMany
-      resources:
-        requests:
-          storage: 5Gi
+#     kind: PersistentVolumeClaim
+#     apiVersion: v1
+#     metadata:
+#       name: postgres-pv-claim
+#       labels:
+#         app: postgres
+
+#     spec:
+#       storageClassName: manual
+#       accessModes:
+#         - ReadWriteMany
+#       resources:
+#         requests:
+#           storage: 5Gi
 
 ---
 
@@ -95,7 +95,7 @@ spec:
       - name: postgres
         port: 5432
         targetPort: 5432
-      type: LoadBalancer
+      type: ClusterIP
       selector:
         app: postgres
 
