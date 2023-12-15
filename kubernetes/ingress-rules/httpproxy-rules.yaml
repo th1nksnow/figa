@@ -33,6 +33,6 @@ spec:
       - prefix: /api/gethistory
       services:
         - name: pull
-          port: 80
+          port: 8010
 
 ...
