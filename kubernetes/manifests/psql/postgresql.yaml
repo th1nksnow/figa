@@ -19,22 +19,24 @@ spec:
         - name: postgres
           image: postgres:13
           imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
           env:
-           - name: DB_LOGIN
-             valueFrom:
-               secretKeyRef:
-                 name: db-user
-                 key: db-username
-           - name: DB_PASS
-             valueFrom:
-               secretKeyRef:
-                 name: db-pass
-                 key: db-password
-           - name: DB_NAME
-             valueFrom:
-               configMapKeyRef:
-                 name: history-env
-                 key: DB_NAME
+          - name: DB_LOGIN
+            valueFrom:
+              secretKeyRef:
+                name: db-user
+                key: db-username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: db-pass
+                key: db-password
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: history-env
+                key: DB_NAME
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb
@@ -89,12 +91,12 @@ spec:
         app: postgres
    
     spec:
-       ports:
-        - name: postgres
-          port: 5432
-          targetPort: 5432
-       type: NodePort
-       selector:
-        app: postgres
+      ports:
+      - name: postgres
+        port: 5432
+        targetPort: 5432
+      type: ClusterIP
+      selector:
+       app: postgres
 
 ...
