@@ -21,7 +21,7 @@ spec:
       - name: regcred
       containers:
         - name: frontend
-          image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:latest
+          image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:kube
           ports:
             - containerPort: 80
           volumeMounts:
