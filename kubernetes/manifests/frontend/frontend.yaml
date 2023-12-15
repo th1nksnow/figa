@@ -22,6 +22,7 @@ spec:
       containers:
         - name: frontend
           image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/front:kube
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           volumeMounts:
