@@ -1,5 +1,7 @@
 ---
 
+---
+
 apiVersion: projectcontour.io/v1
 kind: HTTPProxy
 metadata:
@@ -34,10 +36,5 @@ spec:
       services:
         - name: pull
           port: 8010
-    - conditions:  #ArgoCD
-      - prefix: /argocd
-      services:
-        - name: argocd-server
-          port: 443
 
 ...
