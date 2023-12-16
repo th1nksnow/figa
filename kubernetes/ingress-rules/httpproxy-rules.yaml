@@ -34,5 +34,10 @@ spec:
       services:
         - name: pull
           port: 8010
+    - conditions:  #ArgoCD
+      - prefix: /argocd
+      services:
+        - name: argocd-server
+          port: 80
 
 ...
