@@ -103,11 +103,11 @@ deploy:
   script:
     - kubectl rollout restart deployment/frontend
     - kubectl rollout status deployment/frontend
-    - kubectl rollout restart deployment/figalize
-    - kubectl rollout status deployment/figalize
-    - kubectl rollout restart deployment/history
-    - kubectl rollout status deployment/history
     - kubectl rollout restart deployment/pull
     - kubectl rollout status deployment/pull
+    - kubectl rollout restart deployment/history
+    - kubectl rollout status deployment/history
+    - kubectl rollout restart deployment/figalize
+    - kubectl rollout status deployment/figalize
   tags:
     - shell
