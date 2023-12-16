@@ -1,14 +1,15 @@
 stages:
   - build
-  - deploy
+  - staging
+  # - deploy
 
-build:
+build/front-stage:
   only:
     - develop
   stage: build
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - cd frontend 
+    - cd frontend/front-stage
   script:
     - docker build -t $CI_REGISTRY_IMAGE/front:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/front:latest .
     - docker push $CI_REGISTRY_IMAGE/front:$CI_COMMIT_SHORT_SHA
@@ -18,10 +19,72 @@ build:
   tags:
     - shell
 
-deploy:
+build/front-prod:
+  only:
+    - release
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cd frontend/front-prod
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/front:kube .
+    - docker push $CI_REGISTRY_IMAGE/front:kube
+    - docker rmi $CI_REGISTRY_IMAGE/front:kube
+  tags:
+    - shell
+
+build/figalize:
   only:
     - develop
-  stage: deploy
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cd microservices/figalize
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/figalize:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/figalize:latest .
+    - docker push $CI_REGISTRY_IMAGE/figalize:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE/figalize:latest
+    - docker rmi $CI_REGISTRY_IMAGE/figalize:$CI_COMMIT_SHORT_SHA
+    - docker rmi $CI_REGISTRY_IMAGE/figalize:latest
+  tags:
+    - shell
+
+build/history:
+  only:
+    - develop
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cd microservices/history
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/history:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/history:latest .
+    - docker push $CI_REGISTRY_IMAGE/history:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE/history:latest
+    - docker rmi $CI_REGISTRY_IMAGE/history:$CI_COMMIT_SHORT_SHA
+    - docker rmi $CI_REGISTRY_IMAGE/history:latest
+  tags:
+    - shell
+
+build/pull:
+  only:
+    - develop
+  stage: build
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cd microservices/pull
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/pull:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/pull:latest .
+    - docker push $CI_REGISTRY_IMAGE/pull:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE/pull:latest
+    - docker rmi $CI_REGISTRY_IMAGE/pull:$CI_COMMIT_SHORT_SHA
+    - docker rmi $CI_REGISTRY_IMAGE/pull:latest
+  tags:
+    - shell
+
+staging:
+  only:
+    - develop
+  stage: staging
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - cd docker-compose
@@ -32,3 +95,18 @@ deploy:
     - docker rmi $(docker images -f "dangling=true" -q)
   tags:
     - shell
+
+# deploy:
+#   only:
+#     - master
+#   stage: deploy
+#   before_script:
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#     - cd docker-compose
+#   script:
+#     - docker compose down
+#     - docker compose pull
+#     - docker compose up -d
+#     - docker rmi $(docker images -f "dangling=true" -q)
+#   tags:
+#     - shell
