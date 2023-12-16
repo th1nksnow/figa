@@ -1,7 +1,7 @@
 stages:
   - build
   - staging
-  # - deploy
+  - deploy
 
 build/front-stage:
   only:
@@ -96,17 +96,18 @@ staging:
   tags:
     - shell
 
-# deploy:
-#   only:
-#     - master
-#   stage: deploy
-#   before_script:
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#     - cd docker-compose
-#   script:
-#     - docker compose down
-#     - docker compose pull
-#     - docker compose up -d
-#     - docker rmi $(docker images -f "dangling=true" -q)
-#   tags:
-#     - shell
+deploy:
+  only:
+    - master
+  stage: deploy
+  script:
+    - kubectl rollout restart deployment/frontend
+    - kubectl rollout status deployment/frontend
+    - kubectl rollout restart deployment/figalize
+    - kubectl rollout status deployment/figalize
+    - kubectl rollout restart deployment/history
+    - kubectl rollout status deployment/history
+    - kubectl rollout restart deployment/pull
+    - kubectl rollout status deployment/pull
+  tags:
+    - shell

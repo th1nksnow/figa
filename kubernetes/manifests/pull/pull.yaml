@@ -22,6 +22,7 @@ spec:
       containers:
         - name: pull
           image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/pull:latest
+          imagePullPolicy: Always
           env:
           - name: DB_HOST
             valueFrom:

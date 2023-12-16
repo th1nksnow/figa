@@ -22,6 +22,7 @@ spec:
       containers:
         - name: figalize
           image: registry.gitlab.thinksnow.ru/th1nksnow/figalizer/figalize:latest
+          imagePullPolicy: Always
           env:
           - name: HISTORY_APPEND_URL
             valueFrom:
